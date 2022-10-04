@@ -8,9 +8,16 @@ const schema = buildSchema(`
         content: String
     }
 
+    type Article {
+        id: String
+        content: String
+        comments: [Comment]
+    }
+
     type Query {
         comment(id: String!): Comment
         comments: [Comment]
+        articles: [Article]
     }
 
     type Mutation {

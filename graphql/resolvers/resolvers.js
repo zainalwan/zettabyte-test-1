@@ -1,6 +1,9 @@
 'use strict';
 
 const {
+    articles
+} = require('./article');
+const {
     createComment,
     comment,
     comments,
@@ -9,6 +12,7 @@ const {
 } = require('./comment');
 
 module.exports = {
+    articles,
     createComment,
     comment,
     comments,
