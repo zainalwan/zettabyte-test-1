@@ -1,20 +1,28 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+'use strict';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const graphqlRouter = require('./routes/graphql');
 
-var app = express();
+(async () => {
+    await mongoose.connect(process.env.DB_URL, {
+        user: process.env.DB_USER,
+        pass: process.env.DB_PASS,
+    });
+})();
 
-app.use(logger('dev'));
+const app = express();
+
+app.use(logger('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/graphql', graphqlRouter);
 
 module.exports = app;
