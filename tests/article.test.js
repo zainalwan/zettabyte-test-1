@@ -47,7 +47,7 @@ describe('Article resource test', () => {
         mongoose.disconnect();
     });
 
-    it('Should get all comments', async () => {
+    it('Should get all articles', async () => {
         let query = `query {
             articles {
                 id
@@ -58,12 +58,30 @@ describe('Article resource test', () => {
         let response = await request(app).post('/graphql').send({query: query});
         expect(response.status).toBe(200);
         expect(response.body.data.articles)
-            .toEqual(expect.arrayContaining(comments.map(article => {
+            .toEqual(expect.arrayContaining(articles.map(article => {
                 return {
                     id: article._id.toString(),
                     title: article.title,
                     content: article.content,
                 };
             })));
+    });
+
+    it('Should get filtered articles', async () => {
+        let query = `query {
+            articles(title: "First") {
+                id
+                title
+                content
+            }
+        }`;
+        let response = await request(app).post('/graphql').send({query: query});
+        expect(response.status).toBe(200);
+        expect(response.body.data.articles)
+            .toEqual(expect.arrayContaining([{
+                id: articles[0]._id.toString(),
+                title: articles[0].title,
+                content: articles[0].content,
+            }]));
     });
 });
