@@ -7,7 +7,9 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const graphqlRouter = require('./routes/graphql');
+const {graphqlHTTP} = require('express-graphql');
+const schema = require('./graphql/schema');
+const resolvers = require('./graphql/resolvers/resolvers');
 
 (async () => {
     await mongoose.connect(process.env.DB_URL, {
@@ -27,6 +29,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.options('/graphql', cors());
-app.use('/graphql', graphqlRouter);
+app.get('/graphql', graphqlHTTP({
+    schema: schema,
+    rootValue: resolvers,
+    graphiql: true,
+}));
+app.post('/graphql', graphqlHTTP({
+    schema: schema,
+    rootValue: resolvers,
+    graphiql: false,
+}));
 
 module.exports = app;
