@@ -1,51 +1,28 @@
 # Zettabyte Life Test Section 1
-In this test I decide to use only `graphql` library due to the unupdated
-`express-graphql` since last 2 years. Therefore, I'm really sorry there is no
-GraphQL playground but the Postman or VS Code Rest Client to play with.
 
-# Setup
+## Setup
 To run the app:
 
 ```
+$ npm install
 $ cp .env.example .env
-$ npm start
 ```
 
-Then, hit the `http://localhost:3000/graphql` with `POST` method.
+## Usage
+Go to `http://localhost:3000/graphql` to use the playground, or hit the URL
+from Postman or VSCode Rest Client with the `{"query": "<query>"}` in the
+request body.
 
-This is the example of the designed GraphQL query in this project:
-
-```
-query {
-    comments {
-        id
-        content
-    }
-}
-```
-
-```
-mutation {
-    createComment(content: "This is a new comment") {
-        id
-        content
-    }
-}
-```
-
-```
-mutation {
-    deleteComment(id: "<commentId>") {
-        id
-        content
-    }
-}
-```
-
-# Test
+## Running
 To run the test,
 
 ```
-$ cp .env.example .env
+$ npm start
+```
+
+## Test
+To run the test,
+
+```
 $ npm run test
 ```
