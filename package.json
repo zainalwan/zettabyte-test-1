@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "jest --coverage",
-    "migrate": "node seed"
+    "seed": "node seed"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
