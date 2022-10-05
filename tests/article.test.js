@@ -123,6 +123,18 @@ describe('Article resource test', () => {
         expect(response.body.data.articles[0].title).toBe('Fifth');
     });
 
+    it('Should paginate articles', async () => {
+        let query = `query {
+            articles(skip: 3, limit: 2) {
+                title
+            }
+        }`;
+        let response = await request(app).post('/graphql').send({query: query});
+        expect(response.status).toBe(200);
+        expect(response.body.data.articles[0].title).toBe('Fourth');
+        expect(response.body.data.articles.length).toBe(2);
+    });
+
     it('Should delete an article', async () => {
         let articleId = articles[0]._id.toString();
         let query = `mutation {
