@@ -18,7 +18,7 @@ const schema = buildSchema(`
     type Query {
         comment(id: String!): Comment
         comments: [Comment]
-        articles(title: String): [Article]
+        articles(title: String, sortBy: String): [Article]
     }
 
     type Mutation {

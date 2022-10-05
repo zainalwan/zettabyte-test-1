@@ -2,13 +2,11 @@
 
 const Article = require('../../models/Article');
 
-const articles = async ({title}) => {
-    let articles;
-    if (title) {
-        articles = await Article.find({title: new RegExp(title, 'g')});
-    } else {
-        articles = await Article.find();
-    }
+const articles = async ({title, sortBy}) => {
+    let articles = Article.find();
+    if (title) articles.where({title: new RegExp(title, 'g')});
+    if (sortBy) articles.sort(sortBy);
+    articles = await articles.exec();
     return articles;
 };
 
