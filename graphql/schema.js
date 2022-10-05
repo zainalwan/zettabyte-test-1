@@ -25,6 +25,7 @@ const schema = buildSchema(`
         createComment(content: String): Comment
         updateComment(id: String!, content: String): Comment
         deleteComment(id: String!): Comment
+        deleteArticle(id: String!): Article
     }
 `);
 

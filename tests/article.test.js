@@ -84,4 +84,19 @@ describe('Article resource test', () => {
                 content: articles[0].content,
             }]));
     });
+
+    it('Should delete an article', async () => {
+        let articleId = articles[0]._id.toString();
+        let query = `mutation {
+            deleteArticle(id: "${articleId}") {
+                id
+                title
+                content
+            }
+        }`;
+        let response = await request(app).post('/graphql').send({query: query});
+        expect(response.status).toBe(200);
+        let article = await Article.findById(articleId).exec();
+        expect(article).toBeNull();
+    });
 });

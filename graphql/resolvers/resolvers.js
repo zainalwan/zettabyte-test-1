@@ -1,7 +1,8 @@
 'use strict';
 
 const {
-    articles
+    articles,
+    deleteArticle,
 } = require('./article');
 const {
     createComment,
@@ -13,6 +14,7 @@ const {
 
 module.exports = {
     articles,
+    deleteArticle,
     createComment,
     comment,
     comments,

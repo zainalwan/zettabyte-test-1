@@ -12,6 +12,13 @@ const articles = async ({title}) => {
     return articles;
 };
 
+const deleteArticle = async ({id}) => {
+    let article = await Article.findById(id).exec();
+    await article.remove();
+    return article;
+};
+
 module.exports = {
     articles,
+    deleteArticle,
 };
