@@ -1,5 +1,6 @@
 'use strict';
 
+const Comment = require('../../models/Comment');
 const Article = require('../../models/Article');
 
 const articles = async ({title, sortBy, skip, limit}) => {
@@ -9,6 +10,11 @@ const articles = async ({title, sortBy, skip, limit}) => {
     if (skip) articles.skip(skip);
     if (limit) articles.limit(limit);
     articles = await articles.exec();
+    articles = articles.map(async article => {
+        let comments = await Comment.find({_id: {$in: article.comments}});
+        article.comments = comments;
+        return article;
+    });
     return articles;
 };
 

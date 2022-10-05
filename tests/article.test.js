@@ -82,21 +82,23 @@ describe('Article resource test', () => {
     it('Should get all articles', async () => {
         let query = `query {
             articles {
-                id
                 title
                 content
+                comments {
+                    content
+                }
             }
         }`;
         let response = await request(app).post('/graphql').send({query: query});
         expect(response.status).toBe(200);
-        expect(response.body.data.articles)
-            .toEqual(expect.arrayContaining(articles.map(article => {
-                return {
-                    id: article._id.toString(),
-                    title: article.title,
-                    content: article.content,
-                };
-            })));
+        expect(response.body.data.articles.length).toBeGreaterThanOrEqual(6);
+        expect(response.body.data.articles[0]).toEqual({
+            title: 'First',
+            content: 'The first article',
+            comments: [{
+                content: 'This is the first comment',
+            }],
+        });
     });
 
     it('Should get filtered articles', async () => {
